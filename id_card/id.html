@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student ID Card System</title>
+    <link rel="stylesheet" href="id.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Welcome Page -->
+    <div id="welcome-page" class="page active">
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h1>Student ID Card System</h1>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="container">
+                <div class="hero">
+                    <h2>Digital Student ID Management</h2>
+                    <p>A comprehensive system for managing student ID card generation with controlled access, admin approval workflows, and professional ID card design.</p>
+                </div>
+
+                <div class="features">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Admin Control</h3>
+                        <p>Complete administrative control over student approvals, college information, and ID card management.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Student Access</h3>
+                        <p>Students can request access, login after approval, and generate their personalized ID cards.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-id-card"></i>
+                        </div>
+                        <h3>ID Generation</h3>
+                        <p>Professional ID card generation with college branding, student details, and print capability.</p>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="showPage('admin-auth')">
+                        <i class="fas fa-user-shield"></i>
+                        Admin Login
+                    </button>
+                    <button class="btn btn-success" onclick="showPage('student-auth')">
+                        <i class="fas fa-user-graduate"></i>
+                        Student Login
+                    </button>
+                    <button class="btn btn-purple" onclick="showPage('request-access')">
+                        <i class="fas fa-user-plus"></i>
+                        Request Access
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Admin Auth Page -->
+    <div id="admin-auth" class="page">
+        <div class="auth-container">
+            <button class="back-btn" onclick="showPage('welcome-page')">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </button>
+
+            <div class="auth-card">
+                <div class="auth-header">
+                    <div class="auth-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h2 id="admin-auth-title">Admin Login</h2>
+                    <p id="admin-auth-subtitle">Access your admin dashboard</p>
+                </div>
+
+                <div id="admin-error" class="error-message"></div>
+
+                <form id="admin-form" class="auth-form">
+                    <div id="college-name-field" class="form-group" style="display: none;">
+                        <label>College Name</label>
+                        <div class="input-group">
+                            <i class="fas fa-building"></i>
+                            <input type="text" id="admin-college" placeholder="Enter college name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="admin-email" placeholder="admin@college.edu" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="admin-password" placeholder="Enter password" required>
+                            <button type="button" class="toggle-password" onclick="togglePassword('admin-password')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <span id="admin-btn-text">Login</span>
+                    </button>
+                </form>
+
+                <div class="auth-switch">
+                    <button type="button" id="admin-switch-btn" onclick="toggleAdminMode()">
+                        Don't have an account? Register
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Auth Page -->
+    <div id="student-auth" class="page">
+        <div class="auth-container">
+            <button class="back-btn" onclick="showPage('welcome-page')">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </button>
+
+            <div class="auth-card">
+                <div class="auth-header">
+                    <div class="auth-icon student">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h2>Student Login</h2>
+                    <p>Access your student dashboard</p>
+                </div>
+
+                <div id="student-error" class="error-message"></div>
+
+                <form id="student-form" class="auth-form">
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="student-email" placeholder="student@email.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password (Roll Number)</label>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="student-password" placeholder="Enter your roll number" required>
+                            <button type="button" class="toggle-password" onclick="togglePassword('student-password')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-full">
+                        <span id="student-btn-text">Login</span>
+                    </button>
+                </form>
+
+                <div class="info-note">
+                    <p><strong>Note:</strong> Your password is your roll number. Contact admin if you need assistance.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Request Access Page -->
+    <div id="request-access" class="page">
+        <div class="auth-container">
+            <button class="back-btn" onclick="showPage('welcome-page')">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </button>
+
+            <div class="auth-card request-card">
+                <div class="auth-header">
+                    <div class="auth-icon purple">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h2>Request Access</h2>
+                    <p>Submit your details for admin approval</p>
+                </div>
+
+                <div id="request-error" class="error-message"></div>
+
+                <form id="request-form" class="auth-form">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <div class="input-group">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="request-name" placeholder="Enter your full name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="request-email" placeholder="student@email.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Roll Number</label>
+                        <div class="input-group">
+                            <i class="fas fa-hashtag"></i>
+                            <input type="text" id="request-roll" placeholder="Enter your roll number" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Blood Group</label>
+                        <div class="input-group">
+                            <i class="fas fa-tint"></i>
+                            <select id="request-blood-group" required>
+                                <option value="">Select Blood Group</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Graduation Year</label>
+                        <div class="input-group">
+                            <i class="fas fa-calendar"></i>
+                            <input type="text" id="request-graduation-year" placeholder="e.g., 2023-2027" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Address</label>
+                        <div class="input-group">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <textarea id="request-address" placeholder="Enter your complete address" required rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Admin Email</label>
+                        <div class="input-group">
+                            <i class="fas fa-user-shield"></i>
+                            <input type="email" id="request-admin-email" placeholder="admin@college.edu" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Photo URL (Optional)</label>
+                        <div class="input-group">
+                            <i class="fas fa-link"></i>
+                            <input type="url" id="request-photo-url" placeholder="https://example.com/your-photo.jpg">
+                        </div>
+                        <small>Provide a public URL to your photo (Google Drive, Dropbox, etc.) or upload below</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Upload Your Photo (Alternative)</label>
+                        <div class="photo-upload-container">
+                            <input type="file" id="request-photo" accept="image/*" style="display: none;">
+                            <div class="photo-upload-area" onclick="document.getElementById('request-photo').click()">
+                                <div id="photo-preview" class="photo-preview" style="display: none;">
+                                    <img id="preview-image" alt="Photo Preview">
+                                </div>
+                                <div id="upload-placeholder" class="upload-placeholder">
+                                    <i class="fas fa-camera"></i>
+                                    <p>Click to upload your photo</p>
+                                    <small>JPG, PNG, GIF (Max 1MB)</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="upload-progress" id="request-upload-progress" style="display: none;">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="request-progress-fill"></div>
+                            </div>
+                            <span class="progress-text" id="request-progress-text">0%</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-purple btn-full">
+                        <span id="request-btn-text">Submit Request</span>
+                    </button>
+                </form>
+
+                <div class="info-note">
+                    <p><strong>Note:</strong> After approval, you can login using your email and roll number as password.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Request Success Page -->
+    <div id="request-success" class="page">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <div class="auth-icon success">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h2>Request Submitted!</h2>
+                    <p>Your access request has been submitted successfully. Please wait for admin approval. You will be able to login once your request is approved.</p>
+                </div>
+
+                <button class="btn btn-purple btn-full" onclick="showPage('welcome-page')">
+                    Back to Home
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="admin-dashboard" class="page">
+        <header class="dashboard-header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h1>Admin Dashboard</h1>
+                    </div>
+                    <button class="btn btn-outline" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard-main">
+            <div class="container">
+                <div class="dashboard-tabs">
+                    <button class="tab-btn active" onclick="showTab('overview')">
+                        <i class="fas fa-chart-bar"></i>
+                        Overview
+                    </button>
+                    <button class="tab-btn" onclick="showTab('settings')">
+                        <i class="fas fa-cog"></i>
+                        College Settings
+                    </button>
+                    <button class="tab-btn" onclick="showTab('requests')">
+                        <i class="fas fa-users"></i>
+                        Pending Requests
+                        <span id="requests-badge" class="badge">0</span>
+                    </button>
+                    <button class="tab-btn" onclick="showTab('students')">
+                        <i class="fas fa-user-check"></i>
+                        All Students
+                    </button>
+                    <button class="tab-btn" onclick="showTab('id-generation')">
+                        <i class="fas fa-id-card"></i>
+                        ID Generation
+                    </button>
+                </div>
+
+                <div class="tab-content">
+                    <!-- Overview Tab -->
+                    <div id="overview-tab" class="tab-pane active">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon orange">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 id="pending-count">0</h3>
+                                    <p>Pending Requests</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon green">
+                                    <i class="fas fa-user-check"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 id="approved-count">0</h3>
+                                    <p>Approved Students</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon blue">
+                                    <i class="fas fa-id-card"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 id="cards-generated">0</h3>
+                                    <p>ID Cards Generated</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Settings Tab -->
+                    <div id="settings-tab" class="tab-pane">
+                        <div class="content-card">
+                            <h2>College Settings</h2>
+                            <p>Configure your college information for ID cards</p>
+
+                            <div id="settings-message" class="message"></div>
+
+                            <form id="settings-form" class="settings-form">
+                                <div class="form-group">
+                                    <label>College Name</label>
+                                    <div class="input-group">
+                                        <i class="fas fa-building"></i>
+                                        <input type="text" id="college-name" placeholder="Enter college name" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>College Address</label>
+                                    <div class="input-group">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <textarea id="college-address" placeholder="Enter college address" rows="3"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>College Logo URL</label>
+                                    <div class="input-group">
+                                        <i class="fas fa-image"></i>
+                                        <input type="url" id="college-logo" placeholder="https://example.com/logo.png">
+                                    </div>
+                                    <small>Provide a public URL to your college logo image</small>
+                                </div>
+
+                                <div id="logo-preview" class="logo-preview" style="display: none;">
+                                    <label>Logo Preview</label>
+                                    <div class="preview-container">
+                                        <img id="preview-img" alt="College Logo">
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i>
+                                    <span id="settings-btn-text">Save Settings</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Requests Tab -->
+                    <div id="requests-tab" class="tab-pane">
+                        <div class="content-card">
+                            <h2>Pending Requests</h2>
+                            <p>Review and approve student access requests</p>
+
+                            <div id="requests-list" class="requests-list">
+                                <div class="empty-state">
+                                    <i class="fas fa-clock"></i>
+                                    <h3>No Pending Requests</h3>
+                                    <p>All access requests have been processed.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Students Tab -->
+                    <div id="students-tab" class="tab-pane">
+                        <div class="content-card">
+                            <h2>All Students</h2>
+                            <p>Manage all students and their access</p>
+
+                            <div class="students-filter">
+                                <div class="filter-buttons">
+                                    <button class="filter-btn active" onclick="filterStudents('all')">All Students</button>
+                                    <button class="filter-btn" onclick="filterStudents('approved')">Approved</button>
+                                    <button class="filter-btn" onclick="filterStudents('with-photo')">With Photo</button>
+                                    <button class="filter-btn" onclick="filterStudents('without-photo')">Without Photo</button>
+                                </div>
+                            </div>
+
+                            <div id="students-list" class="students-list">
+                                <div class="empty-state">
+                                    <i class="fas fa-users"></i>
+                                    <h3>No Students</h3>
+                                    <p>Students will appear here after you approve their requests.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ID Generation Tab -->
+                    <div id="id-generation-tab" class="tab-pane">
+                        <div class="content-card">
+                            <h2>ID Card Generation</h2>
+                            <p>Generate ID cards for individual students</p>
+
+                            <div class="id-generation-options">
+                                <div class="generation-card">
+                                    <div class="generation-icon">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <h3>Single Student ID</h3>
+                                    <p>Generate ID card for a specific student</p>
+                                    <select id="single-student-select" class="student-select">
+                                        <option value="">Select a student...</option>
+                                    </select>
+                                    <button class="btn btn-primary" onclick="generateSingleID()">
+                                        <i class="fas fa-id-card"></i>
+                                        Generate ID
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Student Dashboard -->
+    <div id="student-dashboard" class="page">
+        <header class="dashboard-header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h1>Student Dashboard</h1>
+                    </div>
+                    <button class="btn btn-outline" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard-main">
+            <div class="container">
+                <div class="welcome-card">
+                    <div class="welcome-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div class="welcome-info">
+                        <h2 id="student-welcome">Welcome!</h2>
+                        <p id="student-roll">Roll Number: </p>
+                    </div>
+                </div>
+
+                <div class="student-info-card">
+                    <h3>Your Information</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label>Full Name</label>
+                            <p id="student-name-display"></p>
+                        </div>
+                        <div class="info-item">
+                            <label>Email Address</label>
+                            <p id="student-email-display"></p>
+                        </div>
+                        <div class="info-item">
+                            <label>Roll Number</label>
+                            <p id="student-roll-display"></p>
+                        </div>
+                        <div class="info-item">
+                            <label>Blood Group</label>
+                            <p id="student-blood-group-display">Not Set</p>
+                        </div>
+                        <div class="info-item">
+                            <label>Graduation Year</label>
+                            <p id="student-graduation-year-display">Not Set</p>
+                        </div>
+                        <div class="info-item">
+                            <label>Address</label>
+                            <p id="student-address-display">Not Set</p>
+                        </div>
+                        <div class="info-item">
+                            <label>College</label>
+                            <p id="student-college-display">Not Set</p>
+                        </div>
+                        <div class="info-item">
+                            <label>College Address</label>
+                            <p id="student-college-address-display">Not Set</p>
+                        </div>
+                        <div class="info-item">
+                            <label>Photo</label>
+                            <div id="student-photo-display">No photo uploaded</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Student Details Update Section -->
+                <div id="student-details-section" class="student-details-section">
+                    <div class="details-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <h3>Update Your Details</h3>
+                    <p>Complete your profile information for your ID card.</p>
+                    
+                    <form id="student-details-form" class="student-details-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Blood Group</label>
+                                <div class="input-group">
+                                    <i class="fas fa-tint"></i>
+                                    <select id="student-blood-group">
+                                        <option value="">Select Blood Group</option>
+                                        <option value="A+">A+</option>
+                                        <option value="A-">A-</option>
+                                        <option value="B+">B+</option>
+                                        <option value="B-">B-</option>
+                                        <option value="AB+">AB+</option>
+                                        <option value="AB-">AB-</option>
+                                        <option value="O+">O+</option>
+                                        <option value="O-">O-</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Graduation Year</label>
+                                <div class="input-group">
+                                    <i class="fas fa-calendar"></i>
+                                    <input type="text" id="student-graduation-year" placeholder="e.g., 2023-2027">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Address</label>
+                            <div class="input-group">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <textarea id="student-address" placeholder="Enter your complete address" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i>
+                            Update Details
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Photo Upload Section -->
+                <div id="photo-upload-section" class="photo-upload-section">
+                    <div class="photo-upload-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3>Upload Your Photo</h3>
+                    <p>Please upload a clear photo of yourself for your ID card. This photo will be used on your official student ID.</p>
+                    
+                    <div class="upload-area-student">
+                        <div class="form-group">
+                            <label>Photo URL (Recommended)</label>
+                            <div class="input-group">
+                                <i class="fas fa-link"></i>
+                                <input type="url" id="student-photo-url" placeholder="https://example.com/your-photo.jpg">
+                            </div>
+                            <small>Provide a public URL to your photo for instant upload</small>
+                        </div>
+                        
+                        <div class="upload-divider">
+                            <span>OR</span>
+                        </div>
+                        
+                        <input type="file" id="photo-input" accept="image/*" style="display: none;">
+                        <div class="photo-upload-zone" onclick="document.getElementById('photo-input').click()">
+                            <div id="student-photo-preview" class="photo-preview" style="display: none;">
+                                <img id="student-preview-image" alt="Photo Preview">
+                            </div>
+                            <div id="student-upload-placeholder" class="upload-placeholder">
+                                <i class="fas fa-camera"></i>
+                                <p>Click to upload your photo</p>
+                                <small>JPG, PNG, GIF (Max 1MB)</small>
+                            </div>
+                        </div>
+                        <div class="upload-progress" id="upload-progress" style="display: none;">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progress-fill"></div>
+                            </div>
+                            <span class="progress-text" id="progress-text">0%</span>
+                        </div>
+                        <button id="upload-photo-btn" class="btn btn-primary" onclick="uploadPhoto()">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            Upload Photo
+                        </button>
+                    </div>
+                    
+                    <div class="upload-info">
+                        <p><strong>Requirements:</strong></p>
+                        <ul>
+                            <li>Clear, recent photo of yourself</li>
+                            <li>Image format: JPG, PNG, or GIF</li>
+                            <li>Maximum file size: 1MB</li>
+                            <li>Recommended: Use photo URL for faster upload</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="id-card-section">
+                    <div class="id-card-icon">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <h3>Generate Your ID Card</h3>
+                    <p>Create your official student ID card with college branding and your photo.</p>
+                    <button id="generate-id-btn" class="btn btn-primary btn-large" onclick="generateIDCard()">
+                        <i class="fas fa-id-card"></i>
+                        Generate ID Card
+                    </button>
+                    <div id="id-card-error" class="error-message"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ID Card View -->
+    <div id="id-card-view" class="page">
+        <div class="id-card-container">
+            <!-- Fixed Header with Actions -->
+            <div class="id-card-header-fixed">
+                <div class="id-card-actions-left">
+                    <button class="back-btn-fixed" onclick="goBackFromIDCard()">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Dashboard
+                    </button>
+                </div>
+                <div class="id-card-actions-right">
+                    <button class="btn btn-success" onclick="printIDCard()">
+                        <i class="fas fa-print"></i>
+                        Print ID Card
+                    </button>
+                </div>
+            </div>
+
+            <div class="id-card-wrapper">
+                <!-- Professional ID Card Design -->
+                <div id="id-card" class="id-card-professional">
+                    <!-- Header Section -->
+                    <div class="id-card-header">
+                        <div class="logo-container">
+                            <img id="college-logo-card" class="college-logo" alt="College Logo" style="display: none;">
+                            <div id="logo-placeholder-card" class="logo-placeholder">LOGO</div>
+                        </div>
+                        <div class="college-info">
+                            <h1 id="college-name-card" class="college-name">COLLEGE NAME</h1>
+                            <p id="college-address-card" class="college-address">College Address</p>
+                            <div class="card-title">STUDENT ID CARD</div>
+                        </div>
+                    </div>
+
+                    <!-- Main Content -->
+                    <div class="id-card-body">
+                        <div class="photo-section">
+                            <div class="student-photo-container">
+                                <img id="student-photo-card" class="student-photo" alt="Student Photo" style="display: none;">
+                                <div id="photo-placeholder-card" class="photo-placeholder">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="student-info">
+                            <div class="info-row">
+                                <span class="info-label">Name</span>
+                                <span class="info-colon">:</span>
+                                <span id="student-name-card" class="info-value">Student Name</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Student ID</span>
+                                <span class="info-colon">:</span>
+                                <span id="student-id-card" class="info-value">000000</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Grade/Year</span>
+                                <span class="info-colon">:</span>
+                                <span id="student-year-card" class="info-value">Year</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Blood Group</span>
+                                <span class="info-colon">:</span>
+                                <span id="student-blood-card" class="info-value">O+</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Issued On</span>
+                                <span class="info-colon">:</span>
+                                <span id="issue-date-card" class="info-value">Date</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Address Section -->
+                    <div class="id-card-footer">
+                        <div class="address-row">
+                            <span class="address-label">Address:</span>
+                            <span id="student-address-card" class="address-value">Student Address</span>
+                        </div>
+                        
+                        <!-- Barcode Section -->
+                        <div class="barcode-section">
+                            <div class="barcode" id="barcode-card"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="instructions">
+                <h3>Instructions</h3>
+                <ul>
+                    <li>Click "Print ID Card" to print your ID card directly</li>
+                    <li>For best results, use high-quality paper when printing</li>
+                    <li>Keep your ID card safe and present it when required</li>
+                    <li>The card will print with a light background for better visibility</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Photo Modal -->
+    <div id="photo-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Student Photo</h3>
+                <button class="modal-close" onclick="closePhotoModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img id="modal-photo" alt="Student Photo">
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loading" class="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+        <p class="loading-text">Please wait...</p>
+    </div>
+
+    <!-- Developer Footer -->
+    <footer class="developer-footer">
+        <div class="container">
+            <div class="developer-info">
+                <h3>Developed by</h3>
+                <div class="developers">
+                    <div class="developer">
+                        <h4>🧑🏻‍💻 BATHALA BALAJI</h4>
+                        <div class="developer-links">
+                            <a href="https://linkedin.com/in/" target="_blank" class="linkedin">
+                                <i class="fab fa-linkedin"></i>
+                                LinkedIn
+                            </a>
+                            <a href="mailto:bathalabalaji555@gmail.com" class="email">
+                                <i class="fas fa-envelope"></i>
+                                Gmail
+                            </a>
+                        </div>
+                    </div>
+                    <div class="developer">
+                        <h4>👩🏻‍💻KONDREDDY VIJAYA</h4>
+                        <div class="developer-links">
+                            <a href="https://linkedin.com/in/" target="_blank" class="linkedin">
+                                <i class="fab fa-linkedin"></i>
+                                LinkedIn
+                            </a>
+                            <a href="mailto:bathalabalaji555@gmail.com" class="email">
+                                <i class="fas fa-envelope"></i>
+                                Gmail
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+    
+    <!-- Main JavaScript -->
+    <script src="id.js"></script>
+</body>
+</html>
